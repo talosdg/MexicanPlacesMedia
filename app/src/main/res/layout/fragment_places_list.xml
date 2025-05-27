@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/yellow"
+    tools:context=".ui.adapters.fragments.PlacesListFragment">
+
+    <ImageView
+        android:id="@+id/headerFragment"
+        android:src="@drawable/mexican_head"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:indeterminateDrawable="@drawable/loading_anim"
+        android:indeterminateDuration="2000"
+        />
+    <TextView
+        android:id="@+id/tvConectionError"
+        android:text="@string/conection_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:textColor="@color/darkpurple"
+        android:fontFamily="@font/dimbo"
+        android:textSize="30sp"
+        />
+
+    <ImageView
+        android:id="@+id/ivLele"
+        android:contentDescription="@string/image_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:visibility="invisible"
+        android:src="@drawable/lele"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvGames"
+        android:layout_marginTop="85dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</FrameLayout>
