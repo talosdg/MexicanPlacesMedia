@@ -64,6 +64,7 @@
         android:contentDescription="@string/app_name">
 
     </androidx.recyclerview.widget.RecyclerView>
+
     <ToggleButton
         android:id="@+id/tbPause"
         android:layout_width="wrap_content"

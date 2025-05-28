@@ -133,9 +133,19 @@
                 android:indeterminateDuration="2000"
                 />
 
+
         </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+    <Button
+        android:id="@+id/btReload"
+        android:layout_width="148dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:text="@string/reload" />
 </FrameLayout>

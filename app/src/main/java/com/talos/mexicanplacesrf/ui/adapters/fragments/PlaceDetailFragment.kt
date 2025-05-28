@@ -50,6 +50,16 @@ class PlaceDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         // se instancia el repositorio desde PlacesRFApp
         repository = (requireActivity().application as PlacesRFApp).repository
+
+        loadDetail()
+
+        binding.btReload.setOnClickListener {
+            loadDetail()
+        }
+
+    }
+
+    fun loadDetail(){
         lifecycleScope.launch {
             try {
                 val placeDetail = repository.getPlaceDetailApiary(placeId.toString())
@@ -63,6 +73,8 @@ class PlaceDetailFragment : Fragment() {
                     tvAttractions.text = placeDetail.attractions
                     tvDish.text = placeDetail.dish
                     tvLongDesc.text = placeDetail.abstract
+                    btReload.visibility = View.INVISIBLE
+                    ytpvVideo.visibility = View.VISIBLE
                     ytpvVideo.addYouTubePlayerListener(object: AbstractYouTubePlayerListener(){
                         override fun onReady(youTubePlayer: YouTubePlayer) {
                             youTubePlayer.loadVideo(placeDetail.video.toString(), 0f)
@@ -72,17 +84,17 @@ class PlaceDetailFragment : Fragment() {
                 lifecycle.addObserver(binding.ytpvVideo)
 
             }catch (e: Exception){
-                binding.tvState.text = getString(R.string.conection_error)
-                binding.tvAttractions.text = ""
-                binding.tvDish.text = ""
-
+                binding.apply {
+                    tvState.text = getString(R.string.conection_error)
+                    tvAttractions.text = ""
+                    tvDish.text = ""
+                    ytpvVideo.visibility  = View.INVISIBLE
+                    btReload.visibility = View.VISIBLE
+                }
             }finally {
-
                 binding.pbLoading.visibility = View.GONE
             }
         }
-
-
     }
 
     override fun onDestroy() {
