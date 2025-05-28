@@ -10,4 +10,8 @@
     <string name="dish">Platillo típico</string>
     <string name="conection_error">Hubo un error de conexión</string>
     <string name="image_error">Imagen de error</string>
+    <string name="reload">Reintentar</string>
+    <string name="pause">Pausar</string>
+    <string name="play">Reanudar</string>
+    <string name="back">Regresar</string>
 </resources>

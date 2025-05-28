@@ -50,9 +50,9 @@
                     <com.makeramen.roundedimageview.RoundedImageView
                         android:id="@+id/ivImage"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="150dp"
                         android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
+
                         app:riv_corner_radius="5dp"
                         app:riv_border_color="@color/rose"
                         app:riv_border_width="4dp"
@@ -96,6 +96,16 @@
                         android:textColor="@color/yellow"
                         android:textSize="16sp"
                         />
+                    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                        android:id="@+id/ytpvVideo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="22dp"
+                        android:paddingRight="22dp"
+                        android:paddingBottom="10dp"
+                        android:textColor="@color/yellow"
+                        android:textSize="16sp"
+                        />
                     <TextView
                         android:id="@+id/tvLongDesc"
                         android:layout_width="match_parent"
@@ -126,5 +136,6 @@
         </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </FrameLayout>

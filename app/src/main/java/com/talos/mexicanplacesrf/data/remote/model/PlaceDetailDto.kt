@@ -14,6 +14,8 @@ data class PlaceDetailDto(
     @SerializedName("dish")
     var dish: String? = null,
     @SerializedName("abstract")
-    var abstract: String? = null
+    var abstract: String? = null,
+    @SerializedName("video")
+    var video: String? = null
 
 )

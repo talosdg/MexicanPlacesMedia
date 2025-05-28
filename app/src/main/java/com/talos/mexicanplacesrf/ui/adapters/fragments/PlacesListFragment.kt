@@ -1,5 +1,6 @@
 package com.talos.mexicanplacesrf.ui.adapters.fragments
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -19,7 +20,11 @@ class PlacesListFragment : Fragment() {
     private var _binding: FragmentPlacesListBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var mediaPlayer: MediaPlayer
+
     private lateinit var repository: PlaceRepository
+
+    private var wasPlayingBeforeNavigate = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,9 +35,68 @@ class PlacesListFragment : Fragment() {
         return binding.root
     }
 
-    // cuando el usuario ya esta viendo el fragmento
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.btReload.setOnClickListener {
+            binding.tvConectionError.visibility = View.INVISIBLE
+            binding.ivLele.visibility = View.INVISIBLE
+            binding.btReload.visibility = View.INVISIBLE
+            loadData()
+        }
+        loadData()
+
+        mediaPlayer = MediaPlayer.create(requireContext(), R.raw.jarabe)
+        mediaPlayer.start()
+        binding.tbPause.isChecked = true
+
+        binding.tbPause.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                mediaPlayer.start()
+            } else {
+                mediaPlayer.pause()
+            }
+        }
+
+        mediaPlayer.setOnCompletionListener {
+            binding.tbPause.isChecked = false
+        }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (::mediaPlayer.isInitialized) {
+            mediaPlayer.release()
+        }
+        _binding = null
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        if (::mediaPlayer.isInitialized) {
+            mediaPlayer.stop()
+            mediaPlayer.release()
+        }
+        _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (::mediaPlayer.isInitialized && wasPlayingBeforeNavigate) {
+            mediaPlayer.start()
+            binding.tbPause.isChecked = true
+            wasPlayingBeforeNavigate = false
+        }
+    }
+    override fun onPause() {
+        super.onPause()
+        if (::mediaPlayer.isInitialized && mediaPlayer.isPlaying) {
+            mediaPlayer.pause()
+            binding.tbPause.isChecked = false
+        }
+    }
+
+    private fun loadData(){
         // se instancia el repositorio desde PlacesRFApp
         repository = (requireActivity().application as PlacesRFApp).repository
 
@@ -44,8 +108,16 @@ class PlacesListFragment : Fragment() {
                     layoutManager = LinearLayoutManager(requireContext())
                     adapter = PlacesAdapter(places) { selectedPlace ->
 
+                        wasPlayingBeforeNavigate = mediaPlayer.isPlaying
+
                         binding.tvConectionError.visibility = View.INVISIBLE
                         binding.ivLele.visibility = View.INVISIBLE
+                        binding.btReload.visibility = View.INVISIBLE
+
+                        if (::mediaPlayer.isInitialized && mediaPlayer.isPlaying) {
+                            mediaPlayer.pause()
+                            binding.tbPause.isChecked = false
+                        }
                         selectedPlace.id?.let { id ->
 
                             requireActivity().supportFragmentManager.beginTransaction()
@@ -63,17 +135,13 @@ class PlacesListFragment : Fragment() {
             }catch (e: Exception){
                 binding.tvConectionError.visibility = View.VISIBLE
                 binding.ivLele.visibility = View.VISIBLE
+                binding.btReload.visibility = View.VISIBLE
+
             } finally {
                 binding.pbLoading.visibility = View.GONE
 
             }
         }
-
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 
 }

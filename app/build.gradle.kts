@@ -56,9 +56,12 @@ dependencies {
     //Glide y Picasso
     implementation(libs.glide)
     implementation(libs.picasso)
+//Biblioteca para videos en YouTube
+    implementation(libs.core)
 
-    //Para las corrutinas con alcance lifecycle (opcional)
-    //implementation(libs.androidx.lifecycle.runtime.ktx)
+//Exoplayer
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.ui)
 
     //Imágenes con bordes redondeados
     implementation(libs.roundedimageview)

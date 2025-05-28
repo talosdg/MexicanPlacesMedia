@@ -45,13 +45,32 @@
         android:src="@drawable/lele"
         />
 
+    <Button
+        android:id="@+id/btReload"
+        android:layout_width="148dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:text="@string/reload" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvGames"
-        android:layout_marginTop="85dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="110dp"
         android:contentDescription="@string/app_name">
 
     </androidx.recyclerview.widget.RecyclerView>
-
+    <ToggleButton
+        android:id="@+id/tbPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/rose"
+        android:textOn="@string/pause"
+        android:textOff="@string/play"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"/>
 </FrameLayout>

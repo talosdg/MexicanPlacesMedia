@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.talos.mexicanplacesrf.R
 import com.talos.mexicanplacesrf.application.PlacesRFApp
 import com.talos.mexicanplacesrf.data.PlaceRepository
@@ -39,6 +41,7 @@ class PlaceDetailFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentGameDetailBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -47,7 +50,6 @@ class PlaceDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         // se instancia el repositorio desde PlacesRFApp
         repository = (requireActivity().application as PlacesRFApp).repository
-
         lifecycleScope.launch {
             try {
                 val placeDetail = repository.getPlaceDetailApiary(placeId.toString())
@@ -61,10 +63,13 @@ class PlaceDetailFragment : Fragment() {
                     tvAttractions.text = placeDetail.attractions
                     tvDish.text = placeDetail.dish
                     tvLongDesc.text = placeDetail.abstract
-
-
-
+                    ytpvVideo.addYouTubePlayerListener(object: AbstractYouTubePlayerListener(){
+                        override fun onReady(youTubePlayer: YouTubePlayer) {
+                            youTubePlayer.loadVideo(placeDetail.video.toString(), 0f)
+                        }
+                    })
                 }
+                lifecycle.addObserver(binding.ytpvVideo)
 
             }catch (e: Exception){
                 binding.tvState.text = getString(R.string.conection_error)
@@ -76,6 +81,8 @@ class PlaceDetailFragment : Fragment() {
                 binding.pbLoading.visibility = View.GONE
             }
         }
+
+
     }
 
     override fun onDestroy() {
